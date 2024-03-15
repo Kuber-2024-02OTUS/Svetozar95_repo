@@ -1,0 +1,30 @@
+root@Jarvis:/mnt/c/Users/sveto/OTUS/k8s/Svetozar95_repo# kubectl get node
+NAME                 STATUS   ROLES           AGE   VERSION
+kind-control-plane   Ready    control-plane   46h   v1.27.3
+kind-worker          Ready    <none>          46h   v1.27.3
+kind-worker2         Ready    <none>          46h   v1.27.3
+kind-worker3         Ready    <none>          46h   v1.27.3
+
+root@Jarvis:/mnt/c/Users/sveto/OTUS/k8s/Svetozar95_repo# kubectl label nodes  kind-worker  homework=true
+node/kind-worker labeled
+
+root@Jarvis:/mnt/c/Users/sveto/OTUS/k8s/Svetozar95_repo# kubectl label nodes  kind-worker2  homework=true
+node/kind-worker2 labeled
+
+root@Jarvis:/mnt/c/Users/sveto/OTUS/k8s/Svetozar95_repo# kubectl get nodes --show-labels
+NAME                 STATUS   ROLES           AGE   VERSION   LABELS
+kind-control-plane   Ready    control-plane   46h   v1.27.3   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=kind-control-plane,kubernetes.io/os=linux,node-role.kubernetes.io/control-plane=,node.kubernetes.io/exclude-from-external-load-balancers=
+kind-worker          Ready    <none>          46h   v1.27.3   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,homework=true,kubernetes.io/arch=amd64,kubernetes.io/hostname=kind-worker,kubernetes.io/os=linux
+kind-worker2         Ready    <none>          46h   v1.27.3   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,homework=true,kubernetes.io/arch=amd64,kubernetes.io/hostname=kind-worker2,kubernetes.io/os=linux
+kind-worker3         Ready    <none>          46h   v1.27.3   beta.kubernetes.io/arch=amd64,beta.kubernetes.io/os=linux,kubernetes.io/arch=amd64,kubernetes.io/hostname=kind-worker3,kubernetes.io/os=linux
+
+root@Jarvis:/mnt/c/Users/sveto/OTUS/k8s/Svetozar95_repo# kubectl apply -f namespace.yaml
+root@Jarvis:/mnt/c/Users/sveto/OTUS/k8s/Svetozar95_repo# kubectl apply -f configmap-nginx.yaml
+root@Jarvis:/mnt/c/Users/sveto/OTUS/k8s/Svetozar95_repo# kubectl apply -f deployment.yaml
+
+root@Jarvis:/mnt/c/Users/sveto/OTUS/k8s/Svetozar95_repo# kubectl -n homework  get pods -o wide
+NAME                                        READY   STATUS    RESTARTS   AGE    IP           NODE           NOMINATED NODE   READINESS GATES
+nginx-homework-deployment-f69674848-5v6xj   1/1     Running   0          100s   10.244.1.3   kind-worker2   <none>           <none>
+nginx-homework-deployment-f69674848-ctcf9   1/1     Running   0          96s    10.244.1.4   kind-worker2   <none>           <none>
+nginx-homework-deployment-f69674848-xdjv6   1/1     Running   0          100s   10.244.2.3   kind-worker    <none>           <none>
+

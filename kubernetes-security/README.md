@@ -4,15 +4,11 @@
 - Научиться настраивать bindins для ServiceAccount c различными правами, на уровне namespace так и на уровне всего кластера.
 - Понять механизм работы секретов, которые создаются для SA
 
-
-
 ## В процессе сделано:
  - Ипортировал ямлы из предыдущего ДЗ 
  - создал service-acc-monitoring.yaml и запустил (kubectl apply -f service-acc-monitoring.yaml)
  - создал service-acc-cd-admin.yaml и запустил (kubectl apply -f service-acc-cd-admin.yaml)
  - изменил deployment.yaml
- 
-
 
 ## Как запустить проект:
  - Установить helm install nginx-ingress ingress-nginx/ingress-nginx --namespace homework --set controller.service.type=NodePort
@@ -22,7 +18,17 @@
  - выполнить  kubectl apply -f service-acc-monitoring.yaml service-acc-cd-admin.yaml
  - kubeconfig.yaml -  для подключения. Проверял через export перепеменной и проверки подов  kubectl get pods 
  
+## Как проверить работоспособность:
 
+~~~
+svetozar@Jarvis:~$ export KUBECONFIG=kubeconfig.yaml
+svetozar@Jarvis:~$ kubectl get pods
+NAME                                                      READY   STATUS    RESTARTS      AGE
+nginx-homework-deployment-5cb54fc8c8-6szg2                1/1     Running   2 (41m ago)   22h
+nginx-homework-deployment-5cb54fc8c8-lgclp                1/1     Running   2 (41m ago)   22h
+nginx-homework-deployment-5cb54fc8c8-znk7r                1/1     Running   2 (41m ago)   22h
+nginx-ingress-ingress-nginx-controller-6c4d5c8bbb-mc22j   1/1     Running   2 (41m ago)   24h
+~~~
 
 
 ## Платформа выполнения:

@@ -1,0 +1,74 @@
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cd-token
+  namespace: homework
+  annotations:
+    kubernetes.io/service-account.name: cd
+type: kubernetes.io/service-account-token
+data:
+  token: | 
+    ZXlKaGJHY2lPaUpTVXpJMU5pSXNJbXRwWkNJNklsOTZORlZYUTE5V01qWTFjVTFxT0hsV1dVWmFM
+    Vkl0WkZoRVFYRnZWa2hRZEZKd01YRkxaRVl6ZW1zaWZRLmV5SmhkV1FpT2xzaWFIUjBjSE02THk5
+    cmRXSmxjbTVsZEdWekxtUmxabUYxYkhRdWMzWmpMbU5zZFhOMFpYSXViRzlqWVd3aVhTd2laWGh3
+    SWpveE56RXlOVGsxT0RBeExDSnBZWFFpT2pFM01USTFNRGswTURFc0ltbHpjeUk2SW1oMGRIQnpP
+    aTh2YTNWaVpYSnVaWFJsY3k1a1pXWmhkV3gwTG5OMll5NWpiSFZ6ZEdWeUxteHZZMkZzSWl3aWEz
+    VmlaWEp1WlhSbGN5NXBieUk2ZXlKdVlXMWxjM0JoWTJVaU9pSm9iMjFsZDI5eWF5SXNJbk5sY25a
+    cFkyVmhZMk52ZFc1MElqcDdJbTVoYldVaU9pSmpaQ0lzSW5WcFpDSTZJakV3TkRrME1tUmpMV000
+    TnpndE5EQmxaQzFoWmpCbExUZGlOak0yT1RVd056QTRaU0o5ZlN3aWJtSm1Jam94TnpFeU5UQTVO
+    REF4TENKemRXSWlPaUp6ZVhOMFpXMDZjMlZ5ZG1salpXRmpZMjkxYm5RNmFHOXRaWGR2Y21zNlky
+    UWlmUS5UekNoV2t5c2NyZjhjNlR5Nm1NNm0tcElKMlkwSEdGRXJSRUk1RlZlOHR3QWtfdUV0dGZu
+    b1lPSEU4eGhyekoyN1d5WGRvdk5xYlpjUXZJUUZ6N2tuMEpfa0J4bXh5b2RuMDZGaGpYTm52Qm5O
+    V3gxa3psNFNEdnY1S3A5blBCZTU0NXlXNEtZMjBXdlVnR2NUcWJZb1lyODUxc0YtamtvUkxhSFNy
+    TUp4MTd2RG9ZWjZZNDc4aVFaTEM0SmtKVnJuWVJHS1Z5TmhGM0I2QVBINXRKdTZxZGxiSkl5a0Mt
+    aXJ2MG5rMUxyREJFaWVYbldUVExhWS1mVWZZQ0pCWUFObk9jWkpYNzlaY0ZnV3NCLUF4SGZ4cFVB
+    LUplc3hIODFFczVlaFo0Qm9yNlI4Yl9NNmU2NTZtbzcxQV9waDJMSGJLc3dqcTBVWmdVVk1YVU94
+    dENnclE=
+  
+
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cd
+  namespace: homework
+  annotations:
+    kubernetes.io/enforce-mountable-secrets: "true"
+automountServiceAccountToken: true
+secrets:
+  - name: cd-token
+
+---
+
+
+
+
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+    name: cd-Role
+    namespace: homework
+rules:
+- apiGroups: ["*"]
+  resources: ["*"]
+  verbs: ["*"]
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cd-RoleBinding
+  namespace: homework
+roleRef:
+  kind: Role
+  name: cd-Role
+  apiGroup: rbac.authorization.k8s.io
+subjects:
+- kind: ServiceAccount
+  name: cd
+  namespace: homework

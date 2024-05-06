@@ -1,0 +1,59 @@
+# Default values for websrv.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 3
+strategy:
+  type: RollingUpdate
+  maxUnavailable: 1
+  maxSurge: 0
+# values.yaml
+namespace: homework
+
+selector:
+  app: homework
+labels:
+  app: my-app
+
+service:
+  type: ClusterIP
+  port: 80
+  ports:
+    port: 8000
+    targetPort: 8000
+    name: http  
+    
+
+ingress:
+  enabled: false
+  # Раскомментируйте и настройте, если нужен Ingress
+  # host: example.com
+  # path: /
+  # className: nginx
+  # tls:
+  #   - hosts:
+  #     - example.com
+
+resources:
+  requests:
+    cpu: 100m
+    memory: 128Mi
+  limits:
+    cpu: 500m
+    memory: 512Mi
+
+
+spec-pvc:
+  accessModes:
+    - ReadWriteOnce
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 1Gi
+
+
+serviceAccounts:
+  monitoring:
+    name: monitoring
+
+

@@ -1,0 +1,14 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: homework
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: prod
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: dev

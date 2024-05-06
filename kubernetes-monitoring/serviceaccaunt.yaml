@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: nginx-monitor
+  namespace: homework
+  labels:
+    app: "homework"
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  endpoints:
+  - port: 9113
+    interval: 30s
+    scrapeTimeout: 30s

@@ -1,0 +1,9 @@
+apiVersion: otus.homework/v1
+kind: MySQL
+metadata:
+  name: example-mysql
+spec:
+  image: bitnami/mysql:latest
+  database: example-db
+  password: SecurePassword123
+  storage_size: "5G"
